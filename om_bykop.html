@@ -9,6 +9,54 @@
 </head>
 
 <body>
+    <!-- Splash sektion -->
+    <section id="splash_ombykop">
+        <div class="splash_text"></div>
+        <div class="skyline"></div>
+    </section>
+    <main>
+        <!-- Sektion med oplysninger, der hentes fra WP -->
+        <section id="about">
+            <div class="about_headers"></div>
+            <div class="about_texts"></div>
+        </section>
+        <!-- Sektion med medarbejdere, der hentes fra WP -->
+        <section id="team">
+            <div class="team_top">
+                <div class="arrow_left"></div>
+                <div class="employees"></div>
+                <div class="arrow_right"></div>
+            </div>
+            <div class="team_bottom">
+
+            </div>
+        </section>
+
+        <!-- Templates -->
+        <template id="about_headers_template">
+            <article class="about_header">
+                <h3></h3>
+            </article>
+        </template>
+
+        <template id="about_text_template">
+            <article class="about_text">
+            </article>
+        </template>
+
+        <template class="employees">
+            <article class="employee">
+                <div class="employee_image">
+                    <img src="" alt="">
+                </div>
+                <div class="employee_text">
+                    <h2></h2>
+                    <h3></h3>
+                    <p></p>
+                </div>
+            </article>
+        </template>
+    </main>
     <script src="script.js"></script>
 </body>
 
