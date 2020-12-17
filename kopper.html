@@ -121,9 +121,17 @@
                 clone.querySelector(".product_image img").src = product.image.guid;
                 clone.querySelector("h2").textContent = product.title.rendered;
                 clone.querySelector("p").innerHTML = product.description;
+                clone.querySelector(".product").addEventListener("click", function() {
+                    productClick(product.id);
+                })
 
                 dest.appendChild(clone);
             })
+        }
+
+        function productClick(id) {
+            console.log(id);
+            location.href = "singleview.html?id=" + id;
         }
     </script>
 </body></html>
