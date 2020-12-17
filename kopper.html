@@ -46,11 +46,14 @@
     <script>
         "use strict"
 
+        // Variabler
         let theCategories;
         let theProducts;
 
+        // Venter på at DOM'en er indlæst
         document.addEventListener("DOMContentLoaded", start);
 
+        // Henter kategorier fra WP
         async function start() {
             console.log("start");
             let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/categories";
@@ -62,6 +65,7 @@
             getTheProducts();
         }
 
+        // Henter produkter fra WP
         async function getTheProducts() {
             console.log("getTheProducts");
             let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/kop?per_page=100";
@@ -71,64 +75,90 @@
             filterContent("alle");
         }
 
+        // Genererer filtreringsknapper
         function generateFilterButtons() {
             console.log("generateFilterButtons");
 
             let dest = document.querySelector(".filter_buttons");
             let temp = document.querySelector("#filter_button_template");
 
+            // Tømmer indholdet af dest
             dest.innerHTML = "";
-            document.querySelector(".filter_button").dataset.id = "alle";
 
+            // Definerer id for .filter_button og lytter efter klik på denne
+            document.querySelector(".filter_button").dataset.id = "alle";
             document.querySelector(".filter_button").addEventListener("click", buttonClick);
 
+            // Looper igennem de enkelte kategorier
             theCategories.forEach(category => {
+                // Definerer klonen
                 let clone = temp.cloneNode(true).content;
+
+                // Indholdet hentes fra WP og placeres i klonen
                 clone.querySelector("img").src = category.icon.guid;
-                clone.querySelector(".filter_button").dataset.name = category.name;
+
+                // Definerer id for klonerne .filter_button og lytter efter klik på disse
                 clone.querySelector(".filter_button").dataset.id = category.id;
                 clone.querySelector(".filter_button").addEventListener("click", buttonClick);
+
+                // Sætter hver enkelt klon ind i DOM'en
                 dest.appendChild(clone);
             })
         }
 
+        // Henter ID fra klikket element og går til filterContent
         function buttonClick() {
             console.log("ID", this.dataset.id);
             filterContent(this.dataset.id);
         }
 
+        // Filtrerer dataen fra WP
         function filterContent(theFilter) {
             let filtered;
+
+            // Hvis ID'et er "alle" vises alle produkter
             if (theFilter == "alle") {
                 filtered = theProducts;
-            } else {
-                filtered = theProducts.filter(course => course.categories[0] == theFilter);
+            }
+
+            // Viser de filtrede produkter ud fra kategori id'et
+            else {
+                filtered = theProducts.filter(product => product.categories[0] == theFilter);
             }
 
             showProducts(filtered);
         }
 
+        // Viser produkterne i DOM'en
         function showProducts(theFilteredJson) {
             console.log("showProducts");
             let dest = document.querySelector("#products");
             let temp = document.querySelector("#product_template");
 
+            // Tømmer dest for indhold
             dest.innerHTML = "";
 
+            // Lopper igennem produkterne
             theFilteredJson.forEach(product => {
+                // Definerer klonen
                 let clone = temp.cloneNode(true).content;
 
+                // Indholdet fra WP placeres i klonen
                 clone.querySelector(".product_image img").src = product.image.guid;
                 clone.querySelector("h2").textContent = product.title.rendered;
                 clone.querySelector("p").innerHTML = product.description;
+
+                // Gør hver enkelt produkt klikbart
                 clone.querySelector(".product").addEventListener("click", function() {
                     productClick(product.id);
                 })
 
+                // Sætter hver enkelt klon ind i DOM'en
                 dest.appendChild(clone);
             })
         }
 
+        // Går til singleview.html for det klikkede produkt
         function productClick(id) {
             console.log(id);
             location.href = "singleview.html?id=" + id;
