@@ -13,10 +13,18 @@
     <section id="splash_index">
         <div class="splash_section_top">
             <div class="arrow_left"></div>
-            <div class="splash_icon"></div>
-            <div class="splash_icon"></div>
-            <div class="splash_icon"></div>
-            <div class="splash_icon"></div>
+            <div class="splash_icon1">
+                <img src="" alt="">
+            </div>
+            <div class="splash_icon2">
+                <img src="" alt="">
+            </div>
+            <div class="splash_icon3">
+                <img src="" alt="">
+            </div>
+            <div class="splash_icon4">
+                <img src="" alt="">
+            </div>
             <div class="character1"></div>
             <div class="character2"></div>
             <div class="character3"></div>
@@ -25,34 +33,142 @@
         </div>
         <div class="splash_index_bottom">
             <div class="round_bg"></div>
-            <div class="splash_text"></div>
-            <div class="splash_button"></div>
+            <div class="splash_text1">
+                <h2></h2>
+                <p></p>
+                <h4 class="splash_button"></h4>
+            </div>
+            <div class="splash_text2">
+                <h2></h2>
+                <p></p>
+                <h4 class="splash_button"></h4>
+            </div>
+            <div class="splash_text3">
+                <h2></h2>
+                <p></p>
+                <h4 class="splash_button"></h4>
+            </div>
+            <div class="splash_text4">
+                <h2></h2>
+                <p></p>
+                <h4 class="splash_button"></h4>
+            </div>
         </div>
     </section>
     <main>
         <!-- Section med facts -->
         <section id="facts_index">
-            <div class="facts_icon">
-                <div class="facts_text"></div>
-            </div>
-            <div class="facts_icon">
-                <div class="facts_text"></div>
-            </div>
-            <div class="facts_icon">
-                <div class="facts_text"></div>
-            </div>
-            <div class="facts_icon">
-                <div class="facts_text"></div>
-            </div>
         </section>
         <!-- Section med kampagnevideoen -->
         <section id="about_index">
-            <div class="about_video"></div>
-            <div class="about_text"></div>
-            <div class="about_button"></div>
         </section>
+
+        <!-- Templates -->
+        <template id="facts_template">
+            <article class="fact">
+                <h3></h3>
+                <p></p>
+            </article>
+        </template>
     </main>
     <script src="script.js"></script>
-</body>
+    <script>
+        "use strict"
 
-</html>
+        // Variabler
+        let theIcons;
+        let theFacts;
+        let thePage;
+
+        // Venter på at DOM'en er indlæst
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log("start");
+            getTheSplashIcons();
+        }
+
+        // Henter ikoner og tilhørende tekst fra WP
+        async function getTheSplashIcons() {
+            console.log("getTheSplashIcons");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/splash_icon";
+            let jsonData = await fetch(url);
+            theIcons = await jsonData.json();
+            console.log(theIcons);
+
+            // Ikonerne sættes ind i splashsektionen
+            document.querySelector(".splash_icon1 img").src = theIcons[3].image.guid;
+            document.querySelector(".splash_icon2 img").src = theIcons[2].image.guid;
+            document.querySelector(".splash_icon3 img").src = theIcons[1].image.guid;
+            document.querySelector(".splash_icon4 img").src = theIcons[0].image.guid;
+
+            // Overskrifterne sættes ind i splash teksterne
+            document.querySelector(".splash_text1 h2").textContent = theIcons[3].title.rendered;
+            document.querySelector(".splash_text2 h2").textContent = theIcons[2].title.rendered;
+            document.querySelector(".splash_text3 h2").textContent = theIcons[1].title.rendered;
+            document.querySelector(".splash_text4 h2").textContent = theIcons[0].title.rendered;
+
+            // Teksten sættes ind i splash teksterne
+            document.querySelector(".splash_text1 p").innerHTML = theIcons[3].description;
+            document.querySelector(".splash_text2 p").innerHTML = theIcons[2].description;
+            document.querySelector(".splash_text3 p").innerHTML = theIcons[1].description;
+            document.querySelector(".splash_text4 p").innerHTML = theIcons[0].description;
+
+            // Knapper sættes ind i splash teksterne
+            document.querySelector(".splash_text1 h4").textContent = theIcons[3].button;
+            document.querySelector(".splash_text2 h4").textContent = theIcons[2].button;
+            document.querySelector(".splash_text3 h4").textContent = theIcons[1].button;
+            document.querySelector(".splash_text4 h4").textContent = theIcons[0].button;
+
+            getTheFacts();
+        }
+
+        // Henter facts og tilhørende tekst fra WP
+        async function getTheFacts() {
+            console.log("getTheFacts");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/frontpage_fact";
+            let jsonData = await fetch(url);
+            theFacts = await jsonData.json();
+            console.log(theFacts);
+            getThePage();
+            showTheFacts();
+        }
+
+        // Henter forsiden fra WP
+        async function getThePage() {
+            console.log("getThePage");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/9";
+            let jsonData = await fetch(url);
+            thePage = await jsonData.json();
+            console.log(thePage);
+
+            document.querySelector(".splash_index_bottom").style.backgroundImage = thePage.splash_image.guid;
+            document.querySelector("#about_index").innerHTML = thePage.content.rendered;
+        }
+
+        // Viser factsne i DOM'en
+        function showTheFacts() {
+            console.log("showTheFacts");
+
+            let dest = document.querySelector("#facts_index");
+            let temp = document.querySelector("#facts_template");
+
+            // Tømmer dest for indhold
+            dest.innerHTML = "";
+
+            // Looper igennem de enkelte facts
+            theFacts.forEach(fact => {
+                // Definerer klonen
+                let clone = temp.cloneNode(true).content;
+
+                // Indholdet hentes fra WP og placeres i klonen
+                clone.querySelector(".fact").style.backgroundImage = fact.image.guid;
+                clone.querySelector("h3").textContent = fact.title.rendered;
+                clone.querySelector("p").innerHTML = fact.description;
+
+                // Sætter hver enkelt klon ind i DOM'en
+                dest.appendChild(clone);
+            })
+        }
+    </script>
+</body></html>
