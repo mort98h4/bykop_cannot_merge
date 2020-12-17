@@ -12,7 +12,12 @@
     <!-- Splashsektion med filtreringsknapper -->
     <section id="splash_kopper">
         <div class="arrow_left"></div>
-        <div class="filter_buttons"></div>
+        <nav id="filter_buttons">
+            <div class="filter_button">
+                <img src="imgs/produkter.png" alt="">
+            </div>
+            <div class="filter_buttons"></div>
+        </nav>
         <div class="skyline"></div>
         <div class="arrow_right"></div>
     </section>
@@ -38,6 +43,87 @@
         </article>
     </template>
     <script src="script.js"></script>
-</body>
+    <script>
+        "use strict"
 
-</html>
+        let theCategories;
+        let theProducts;
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        async function start() {
+            console.log("start");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/categories";
+            let jsonData = await fetch(url);
+            theCategories = await jsonData.json();
+            console.log(theCategories);
+
+            generateFilterButtons();
+            getTheProducts();
+        }
+
+        async function getTheProducts() {
+            console.log("getTheProducts");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/kop?per_page=100";
+            let jsonData = await fetch(url);
+            theProducts = await jsonData.json();
+            console.log(theProducts);
+            filterContent("alle");
+        }
+
+        function generateFilterButtons() {
+            console.log("generateFilterButtons");
+
+            let dest = document.querySelector(".filter_buttons");
+            let temp = document.querySelector("#filter_button_template");
+
+            dest.innerHTML = "";
+            document.querySelector(".filter_button").dataset.id = "alle";
+
+            document.querySelector(".filter_button").addEventListener("click", buttonClick);
+
+            theCategories.forEach(category => {
+                let clone = temp.cloneNode(true).content;
+                clone.querySelector("img").src = category.icon.guid;
+                clone.querySelector(".filter_button").dataset.name = category.name;
+                clone.querySelector(".filter_button").dataset.id = category.id;
+                clone.querySelector(".filter_button").addEventListener("click", buttonClick);
+                dest.appendChild(clone);
+            })
+        }
+
+        function buttonClick() {
+            console.log("ID", this.dataset.id);
+            filterContent(this.dataset.id);
+        }
+
+        function filterContent(theFilter) {
+            let filtered;
+            if (theFilter == "alle") {
+                filtered = theProducts;
+            } else {
+                filtered = theProducts.filter(course => course.categories[0] == theFilter);
+            }
+
+            showProducts(filtered);
+        }
+
+        function showProducts(theFilteredJson) {
+            console.log("showProducts");
+            let dest = document.querySelector("#products");
+            let temp = document.querySelector("#product_template");
+
+            dest.innerHTML = "";
+
+            theFilteredJson.forEach(product => {
+                let clone = temp.cloneNode(true).content;
+
+                clone.querySelector(".product_image img").src = product.image.guid;
+                clone.querySelector("h2").textContent = product.title.rendered;
+                clone.querySelector("p").innerHTML = product.description;
+
+                dest.appendChild(clone);
+            })
+        }
+    </script>
+</body></html>
