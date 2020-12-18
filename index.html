@@ -211,6 +211,7 @@
             </article>
         </template>
     </main>
+    <footer></footer>
     <script src="script.js"></script>
     <script>
         "use strict"
@@ -233,28 +234,32 @@
             theIcons = await jsonData.json();
             console.log(theIcons);
 
-            // Ikonerne sættes ind i splashsektionen
             let icon1 = document.querySelector(".splash_icon1");
             let icon2 = document.querySelector(".splash_icon2");
             let icon3 = document.querySelector(".splash_icon3");
             let icon4 = document.querySelector(".splash_icon4");
 
+            // Ikonerne sættes ind i splashsektionen
             document.querySelector(".splash_icon1 img").src = theIcons[3].image.guid;
             document.querySelector(".splash_icon2 img").src = theIcons[2].image.guid;
             document.querySelector(".splash_icon3 img").src = theIcons[1].image.guid;
             document.querySelector(".splash_icon4 img").src = theIcons[0].image.guid;
 
+            // Ikon containerne får det samme id som ikonerne
             icon1.dataset.id = theIcons[3].id;
             icon2.dataset.id = theIcons[2].id;
             icon3.dataset.id = theIcons[1].id;
             icon4.dataset.id = theIcons[0].id;
 
+            // Ikon containerne gøres klikbarer
             icon1.addEventListener("click", buttonClick);
             icon2.addEventListener("click", buttonClick);
             icon3.addEventListener("click", buttonClick);
             icon4.addEventListener("click", buttonClick);
 
             getTheSkyline();
+
+            // Kalder showTheSplashIcons som hvis der er klikket på ikonet med id'et 101.
             showTheSplashIcons(iconFilter = "101");
         }
 
@@ -271,6 +276,7 @@
             getTheFacts();
         }
 
+        // Genererer indholdet der matcher det ikon der er klikket på
         function showTheSplashIcons() {
             console.log("showTheSplashIcons");
             let dest = document.querySelector(".splash_texts");
@@ -292,8 +298,10 @@
             })
         }
 
+        // Udskriver ID'et på det ikon der er klikket på i konsollen.
         function buttonClick() {
             console.log("ID", this.dataset.id);
+            // Ændrer iconFilter til det ID som det klikkede ikon har, og kalder showTheSplashIcons med det ID.
             iconFilter = this.dataset.id;
             showTheSplashIcons();
         }
