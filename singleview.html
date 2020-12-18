@@ -93,7 +93,7 @@
                 let clone = temp.cloneNode(true).content;
 
                 // Indholdet hentes fra WP og placeres i klonen
-                clone.querySelector(".fact").style.backgroundImage = fact.image.guid;
+                clone.querySelector(".fact").style.backgroundImage = `url(${fact.image.guid})`;
                 clone.querySelector("h3").textContent = fact.title.rendered;
                 clone.querySelector("p").innerHTML = fact.description;
 

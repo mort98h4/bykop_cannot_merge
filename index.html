@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        main {
+            background-color: white;
+        }
+
+        .fact {
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -143,7 +155,7 @@
             thePage = await jsonData.json();
             console.log(thePage);
 
-            document.querySelector(".splash_index_bottom").style.backgroundImage = thePage.splash_image.guid;
+            document.querySelector(".splash_index_bottom").style.backgroundImage = `url(${thePage.splash_image.guid})`;
             document.querySelector("#about_index").innerHTML = thePage.content.rendered;
         }
 
@@ -163,7 +175,7 @@
                 let clone = temp.cloneNode(true).content;
 
                 // Indholdet hentes fra WP og placeres i klonen
-                clone.querySelector(".fact").style.backgroundImage = fact.image.guid;
+                clone.querySelector(".fact").style.backgroundImage = `url(${fact.image.guid})`;
                 clone.querySelector("h3").textContent = fact.title.rendered;
                 clone.querySelector("p").innerHTML = fact.description;
 
