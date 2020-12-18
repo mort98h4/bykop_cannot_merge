@@ -33,10 +33,8 @@
         </div>
         <div class="splash_index_bottom">
             <div class="round_bg"></div>
-            <div class="splash_text">
-                <h2></h2>
-                <p></p>
-                <h4 class="splash_button"></h4>
+            <div class="splash_texts">
+
             </div>
         </div>
     </section>
@@ -49,6 +47,13 @@
         </section>
 
         <!-- Templates -->
+        <template id="splash_texts_template">
+            <article class="splash_text">
+                <h2></h2>
+                <p></p>
+                <h4 class="splash_button"></h4>
+            </article>
+        </template>
         <template id="facts_template">
             <article class="fact">
                 <h3></h3>
@@ -62,6 +67,7 @@
 
         // Variabler
         let theIcons;
+        let iconFilter;
         let theFacts;
         let thePage;
         let theSkyline;
@@ -76,65 +82,70 @@
             let jsonData = await fetch(url);
             theIcons = await jsonData.json();
             console.log(theIcons);
-            getTheSkyline();
-            showTheSplashIcons();
-            filterContent("101");
-        }
-
-        // Henter skyline grafikken fra WP
-        async function getTheSkyline() {
-        console.log("getTheSkyeline");
-        let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/121";
-        let jsonData = await fetch(url);
-        theSkyline = await jsonData.json();
-        console.log(theSkyline);
-
-        document.querySelector(".skyline").backgroundImage = `url(${theSkyline.splash_image.guid})`;
-        }
-
-        function showTheSplashIcons() {
-            console.log("getTheSplashIcons");
 
             // Ikonerne sættes ind i splashsektionen
+            let icon1 = document.querySelector(".splash_icon1");
+            let icon2 = document.querySelector(".splash_icon2");
+            let icon3 = document.querySelector(".splash_icon3");
+            let icon4 = document.querySelector(".splash_icon4");
+
             document.querySelector(".splash_icon1 img").src = theIcons[3].image.guid;
             document.querySelector(".splash_icon2 img").src = theIcons[2].image.guid;
             document.querySelector(".splash_icon3 img").src = theIcons[1].image.guid;
             document.querySelector(".splash_icon4 img").src = theIcons[0].image.guid;
 
-            document.querySelector(".splash_icon1").dataset.id = theIcons[3].id;
-            document.querySelector(".splash_icon2").dataset.id = theIcons[2].id;
-            document.querySelector(".splash_icon3").dataset.id = theIcons[1].id;
-            document.querySelector(".splash_icon4").dataset.id = theIcons[0].id;
-            document.querySelector(".splash_icon1").addEventListener("click", buttonClick);
-            document.querySelector(".splash_icon2").addEventListener("click", buttonClick);
-            document.querySelector(".splash_icon3").addEventListener("click", buttonClick);
-            document.querySelector(".splash_icon4").addEventListener("click", buttonClick);
+            icon1.dataset.id = theIcons[3].id;
+            icon2.dataset.id = theIcons[2].id;
+            icon3.dataset.id = theIcons[1].id;
+            icon4.dataset.id = theIcons[0].id;
+
+            icon1.addEventListener("click", buttonClick);
+            icon2.addEventListener("click", buttonClick);
+            icon3.addEventListener("click", buttonClick);
+            icon4.addEventListener("click", buttonClick);
+
+            getTheSkyline();
+            showTheSplashIcons(iconFilter = "101");
+        }
+
+        // Henter skyline grafikken fra WP
+        async function getTheSkyline() {
+            console.log("getTheSkyeline");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/121";
+            let jsonData = await fetch(url);
+            theSkyline = await jsonData.json();
+            console.log(theSkyline);
+
+            document.querySelector(".skyline").backgroundImage = `url(${theSkyline.splash_image.guid})`;
+
             getTheFacts();
+        }
+
+        function showTheSplashIcons() {
+            console.log("showTheSplashIcons");
+            let dest = document.querySelector(".splash_texts");
+            let temp = document.querySelector("#splash_texts_template");
+
+            dest.innerHTML = "";
+
+            theIcons.forEach(icon => {
+                if (iconFilter == icon.id) {
+                    console.log(icon);
+                    let clone = temp.cloneNode(true).content;
+
+                    clone.querySelector("h2").textContent = icon.title.rendered;
+                    clone.querySelector("p").innerHTML = icon.description;
+                    clone.querySelector("h4").textContent = icon.button;
+
+                    dest.appendChild(clone);
+                }
+            })
         }
 
         function buttonClick() {
             console.log("ID", this.dataset.id);
-            filterContent(this.dataset.id);
-        }
-        // Indholdet fra WP filtres og sættes ind i DOM'en
-        function filterContent(theFilter) {
-            if (theFilter == "101") {
-                document.querySelector(".splash_text h2").textContent = theIcons[3].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[3].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[3].button;
-            } else if (theFilter == "102") {
-                document.querySelector(".splash_text h2").textContent = theIcons[2].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[2].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[2].button;
-            } else if (theFilter == "103") {
-                document.querySelector(".splash_text h2").textContent = theIcons[1].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[1].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[1].button;
-            } else if (theFilter == "105") {
-                document.querySelector(".splash_text h2").textContent = theIcons[0].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[0].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[0].button;
-            }
+            iconFilter = this.dataset.id;
+            showTheSplashIcons();
         }
 
         // Henter facts og tilhørende tekst fra WP
