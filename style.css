@@ -1,4 +1,53 @@
 * {
     box-sizing: border-box;
-    margin: 0 auto;
+    margin: 0;
+
+}
+
+img {
+    max-width: 200px;
+}
+
+body {
+    background-color: #f1f1f1;
+
+}
+
+h1 {}
+
+h2 {}
+
+h3 {}
+
+/*Sætter styling på knapper*/
+h4 {
+    background-color: #69A774;
+    border-radius: 25px;
+    padding: .5rem;
+    width: 200px;
+    color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+
+}
+
+video {
+
+    width: 100vw;
+    object-fit: cover;
+
+}
+
+.round_bg {
+    width: 400px;
+    height: 400px;
+    background-color: #d9cfc8;
+    border-radius: 50%
+}
+
+#facts_index {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    grid-gap: 2rem;
+
 }
