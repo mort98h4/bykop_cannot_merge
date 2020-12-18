@@ -47,14 +47,41 @@
         "use strict"
 
         // Variabler
+        let thePage;
+        let theSkyline;
         let theCategories;
         let theProducts;
 
         // Venter på at DOM'en er indlæst
         document.addEventListener("DOMContentLoaded", start);
 
-        // Henter kategorier fra WP
+
+
+        // Henter titlen på siden
         async function start() {
+            console.log("getThePage");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/11";
+            let jsonData = await fetch(url);
+            thePage = await jsonData.json();
+            console.log(thePage);
+
+            document.querySelector("title").textContent = thePage.title.rendered + " | ByKop";
+            getTheCategories();
+        }
+
+        // Henter skyline grafikken fra WP
+        async function getTheSkyline() {
+            console.log("getTheSkyeline");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/121";
+            let jsonData = await fetch(url);
+            theSkyline = await jsonData.json();
+            console.log(theSkyline);
+
+            document.querySelector(".skyline").backgroundImage = `url(${theSkyline.splash_image.guid})`;
+        }
+
+        // Henter kategorier fra WP
+        async function getTheCategories() {
             console.log("start");
             let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/categories";
             let jsonData = await fetch(url);

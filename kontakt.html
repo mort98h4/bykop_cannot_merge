@@ -38,6 +38,7 @@
         "use strict"
 
         let thePage;
+        let theSkyline;
         let theFaqs;
         let faqFilter;
 
@@ -55,6 +56,19 @@
             document.querySelector("title").textContent = thePage.title.rendered + " | ByKop";
             document.querySelector("#splash_kontakt").style.backgroundImage = `url(${thePage.splash_image.guid})`;
             document.querySelector(".splash_text").innerHTML = thePage.content.rendered;
+
+            getTheSkyline();
+        }
+
+        // Henter skyline grafikken fra WP
+        async function getTheSkyline() {
+            console.log("getTheSkyeline");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/121";
+            let jsonData = await fetch(url);
+            theSkyline = await jsonData.json();
+            console.log(theSkyline);
+
+            document.querySelector(".skyline").backgroundImage = `url(${theSkyline.splash_image.guid})`;
 
             getTheFaqs();
         }
