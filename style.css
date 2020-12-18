@@ -4,20 +4,33 @@
 
 }
 
-img {
-    max-width: 200px;
-}
 
 body {
-    background-color: #f1f1f1;
+    background-color: #EEEFEE;
 
 }
 
-h1 {}
 
-h2 {}
 
-h3 {}
+h1 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 32px;
+    color: #0D4A01;
+}
+
+h2 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 32px;
+    margin-bottom: 1rem;
+    color: #0D4A01;
+}
+
+h3 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 32px;
+    margin-bottom: 1rem;
+    color: #0D4A01;
+}
 
 /*Sætter styling på knapper*/
 h4 {
@@ -28,26 +41,11 @@ h4 {
     color: #f1f1f1;
     display: flex;
     justify-content: center;
-
+    font-family: 'Ubuntu', sans-serif;
 }
 
-video {
-
-    width: 100vw;
-    object-fit: cover;
-
-}
-
-.round_bg {
-    width: 400px;
-    height: 400px;
-    background-color: #d9cfc8;
-    border-radius: 50%
-}
-
-#facts_index {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    grid-gap: 2rem;
-
+p {
+    font-family: 'Roboto Slab', serif;
+    font-size: 18px;
+    color: #0D4A01;
 }
