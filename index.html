@@ -6,6 +6,151 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+        video {
+            width: 100vw;
+            object-fit: cover;
+
+        }
+
+        /* style på splash section*/
+        .splash_section_top {
+            display: grid;
+            grid-template-areas: "container1 container2 container3 container4""skyline skyline skyline skyline";
+            overflow-x: scroll;
+        }
+
+        @media (min-width: 1024px) {
+            .splash_section_top {
+                max-width: 1500px;
+                margin: 0 auto;
+                overflow-x: hidden;
+            }
+        }
+
+        .splash_icon1 {
+            grid-area: container1;
+        }
+
+        .splash_icon2 {
+            grid-area: container2;
+        }
+
+        .splash_icon3 {
+            grid-area: container3;
+        }
+
+        .splash_icon4 {
+            grid-area: container4;
+        }
+
+        .character {
+            height: 190px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin-right: 200px;
+            margin-top: 190px;
+        }
+
+        .character1 {
+            background-image: url(imgs/pige_kigger.png);
+            grid-area: container1;
+        }
+
+        .character2 {
+            background-image: url(imgs/pige_g%C3%A5r_kop.png);
+            grid-area: container2;
+        }
+
+        .character3 {
+            background-image: url(imgs/pige_retur.png);
+            grid-area: container4;
+        }
+
+        .skyline {
+            grid-area: skyline;
+            border-bottom: 30px solid #D9CFC7;
+            margin-top: -20px;
+            z-index: -1;
+        }
+
+
+        .splash_icon {
+            background-color: #F7F7F7;
+            padding: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 4rem
+        }
+
+        .splash_icon img {
+            width: 150px;
+            height: 150px
+        }
+
+        .splash_index_bottom {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .round_bg {
+            flex-basis: 100;
+            flex-grow: 1;
+            background-color: #d9cfc8;
+            border-radius: 50%;
+            margin-left: -50px;
+            display: flex;
+        }
+
+        /*ændre produktbillede til en kop der er centreret*/
+        .round_bg img {
+            max-width: 200px;
+            padding: 2rem;
+        }
+
+        .splash_text {
+            flex-basis: 100px;
+            flex-grow: 1;
+            margin: 1rem;
+        }
+
+        /* style på facts sektion*/
+        #facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto
+        }
+
+
+        .fact {
+            height: 300px;
+            width: 300px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .about_text {
+            width: 80%;
+            height: 100%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -13,26 +158,30 @@
     <section id="splash_index">
         <div class="splash_section_top">
             <div class="arrow_left"></div>
-            <div class="splash_icon1">
+
+            <div class="splash_icon1 splash_icon">
                 <img src="" alt="">
             </div>
-            <div class="splash_icon2">
+            <div class="splash_icon2 splash_icon">
                 <img src="" alt="">
             </div>
-            <div class="splash_icon3">
+            <div class="splash_icon3 splash_icon">
                 <img src="" alt="">
             </div>
-            <div class="splash_icon4">
+            <div class="splash_icon4 splash_icon">
                 <img src="" alt="">
+
             </div>
-            <div class="character1"></div>
-            <div class="character2"></div>
-            <div class="character3"></div>
+            <div class="character1 character"></div>
+            <div class="character2 character"></div>
+            <div class="character3 character"></div>
             <div class="skyline"></div>
             <div class="arrow_right"></div>
         </div>
         <div class="splash_index_bottom">
-            <div class="round_bg"></div>
+            <div class="round_bg">
+                <img src="imgs/stor_kop_15-15.png" alt="">
+            </div>
             <div class="splash_text">
                 <h2></h2>
                 <p></p>
@@ -163,7 +312,7 @@
                 let clone = temp.cloneNode(true).content;
 
                 // Indholdet hentes fra WP og placeres i klonen
-                clone.querySelector(".fact").style.backgroundImage = fact.image.guid;
+                clone.querySelector(".fact").style.backgroundImage = `url(${fact.image.guid})`;
                 clone.querySelector("h3").textContent = fact.title.rendered;
                 clone.querySelector("p").innerHTML = fact.description;
 
