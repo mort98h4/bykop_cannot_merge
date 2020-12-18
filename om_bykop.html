@@ -24,7 +24,12 @@
         <section id="team">
             <div class="team_top">
                 <div class="arrow_left"></div>
-                <div class="employees"></div>
+                <nav id="filter_buttons">
+                    <div class="filter_button" data-id="alle">
+                        <img src="imgs/team.png" alt="">
+                    </div>
+                    <div class="filter_buttons"></div>
+                </nav>
                 <div class="arrow_right"></div>
             </div>
             <div class="team_bottom">
@@ -44,7 +49,12 @@
             </article>
         </template>
 
-        <template class="employees">
+        <template id="filter_button_template">
+            <div class="filter_button">
+                <img src="" alt="">
+            </div>
+        </template>
+        <template id="employees">
             <article class="employee">
                 <div class="employee_image">
                     <img src="" alt="">
@@ -58,6 +68,132 @@
         </template>
     </main>
     <script src="script.js"></script>
-</body>
+    <script>
+        "use strict"
 
-</html>
+        // Variabler
+        let theAbouts;
+        let aboutFilter;
+        let theEmployees;
+        let employeeFilter;
+
+        // Venter på at DOM'en er indlæst
+        document.addEventListener("DOMContentLoaded", start);
+
+        // Henter abouts fra WP
+        async function start() {
+            console.log("start");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/about";
+            let jsonData = await fetch(url);
+            theAbouts = await jsonData.json();
+            console.log(theAbouts);
+
+            // Genererer de klikbare about overskrifter
+            let dest = document.querySelector(".about_headers");
+            let temp = document.querySelector("#about_headers_template");
+
+            dest.innerHTML = "";
+
+            theAbouts.forEach(header => {
+                let clone = temp.cloneNode(true).content;
+                clone.querySelector("h3").textContent = header.title.rendered;
+                clone.querySelector(".about_header").dataset.id = header.id;
+                clone.querySelector(".about_header").addEventListener("click", filterAbouts);
+
+                dest.appendChild(clone);
+            })
+
+            // Kalder funktionen showAbout på samme måde, som hvis man klikker about overskriften med ID'et 48
+            showAbouts(aboutFilter = "48");
+            getTheEmployees();
+        }
+
+        // Genererer indholdet der matcher den about overskrift der er klikket på
+        function showAbouts() {
+            console.log("showAbouts");
+            let dest = document.querySelector(".about_texts");
+            let temp = document.querySelector("#about_text_template");
+
+            dest.innerHTML = "";
+
+            theAbouts.forEach(about => {
+                if (aboutFilter == about.id) {
+                    console.log(about);
+                    let clone = temp.cloneNode(true).content;
+
+                    clone.querySelector(".about_text").innerHTML = about.description;
+
+                    dest.appendChild(clone);
+                }
+            })
+        }
+
+        // Udskriver ID'et på den overskrift der er klikket på i konsollen.
+        function filterAbouts() {
+            console.log("ID", this.dataset.id);
+            // Ændrer aboutFilter til det ID som den klikkede overskrift har, og kalder showAbouts med det ID.
+            aboutFilter = this.dataset.id;
+            showAbouts();
+        }
+
+        // Henter employees fra WP
+        async function getTheEmployees() {
+            console.log("getTheEmployees");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/employee";
+            let jsonData = await fetch(url);
+            theEmployees = await jsonData.json();
+            console.log(theEmployees);
+
+            // Genererer de klikbare employee ikoner, og gør det "originale" ikon klikbart
+            let dest = document.querySelector(".filter_buttons");
+            let temp = document.querySelector("#filter_button_template");
+
+            document.querySelector(".filter_button").addEventListener("click", filterEmployees);
+
+            dest.innerHTML = "";
+
+            theEmployees.forEach(employee => {
+                let clone = temp.cloneNode(true).content;
+                clone.querySelector("img").src = employee.image.guid;
+                clone.querySelector(".filter_button").dataset.id = employee.id;
+                clone.querySelector(".filter_button").addEventListener("click", filterEmployees);
+                dest.appendChild(clone);
+            })
+
+            // Kalder funktionen showEmployees på samme måde, som hvis man klikker på employee ikonet med ID'et "alle".
+            showEmployees(employeeFilter = "alle");
+        }
+
+        // Genererer indholdet der matcher det employee ikon der er klikket på
+        function showEmployees() {
+            console.log("showEmployees")
+            let dest = document.querySelector(".team_bottom");
+            let temp = document.querySelector("#employees");
+
+            dest.innerHTML = "";
+
+            theEmployees.forEach(employee => {
+                // Hvis intet ikon er klikket eller ikonet med id'et "alle" er klikket, viser den alle medarbejdere.
+                if (employeeFilter == "alle" || employeeFilter == employee.id) {
+                    console.log(employee);
+                    let clone = temp.cloneNode(true).content;
+
+                    clone.querySelector("img").src = employee.image.guid;
+                    clone.querySelector("h2").textContent = employee.title.rendered;
+                    clone.querySelector("h3").textContent = employee.job_description;
+                    clone.querySelector("p").innerHTML = employee.description;
+
+                    dest.appendChild(clone);
+                }
+            })
+        }
+
+        // Udskriver ID'et på det ikon der er klikket på i konsollen.
+        function filterEmployees() {
+            console.log("filterEmployees");
+            // Ændrer employeeFilter til det ID som den klikkede overskrift har, og kalder showEmployees med det ID.
+            employeeFilter = this.dataset.id;
+            showEmployees();
+        }
+    </script>
+</body></html>
