@@ -25,13 +25,6 @@
             overflow-x: scroll;
         }
 
-        @media (min-width: 1024px) {
-            .splash_section_top {
-                max-width: 1500px;
-                margin: 0 auto;
-                overflow-x: hidden;
-            }
-        }
 
         .splash_icon1 {
             grid-area: container1;
@@ -74,10 +67,14 @@
         }
 
         .skyline {
+            height: 100px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
             grid-area: skyline;
-            border-bottom: 30px solid #D9CFC7;
-            margin-top: -20px;
-            z-index: -1;
+
+
+            z-index: ;
         }
 
 
@@ -88,7 +85,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 4rem
+            margin: 4rem;
         }
 
         .splash_icon img {
@@ -120,6 +117,7 @@
             flex-basis: 100px;
             flex-grow: 1;
             margin: 1rem;
+
         }
 
         /* style på facts sektion*/
@@ -175,8 +173,9 @@
             <div class="character1 character"></div>
             <div class="character2 character"></div>
             <div class="character3 character"></div>
-            <div class="skyline"></div>
             <div class="arrow_right"></div>
+            <div class="skyline"></div>
+
         </div>
         <div class="splash_index_bottom">
             <div class="round_bg">
@@ -232,13 +231,13 @@
 
         // Henter skyline grafikken fra WP
         async function getTheSkyline() {
-        console.log("getTheSkyeline");
-        let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/121";
-        let jsonData = await fetch(url);
-        theSkyline = await jsonData.json();
-        console.log(theSkyline);
+            console.log("getTheSkyeline");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/121";
+            let jsonData = await fetch(url);
+            theSkyline = await jsonData.json();
+            console.log(theSkyline);
 
-        document.querySelector(".skyline").backgroundImage = `url(${theSkyline.splash_image.guid})`;
+            document.querySelector(".skyline").backgroundImage = `url(${theSkyline.splash_image.guid})`;
         }
 
         function showTheSplashIcons() {
