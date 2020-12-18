@@ -113,7 +113,7 @@
             padding: 2rem;
         }
 
-        .splash_text {
+        .splash_texts {
             flex-basis: 100px;
             flex-grow: 1;
             margin: 1rem;
@@ -181,7 +181,7 @@
             <div class="round_bg">
                 <img src="imgs/stor_kop_15-15.png" alt="">
             </div>
-            <div class="splash_text">
+            <div class="splash_texts">
                 <h2></h2>
                 <p></p>
                 <h4 class="splash_button"></h4>
@@ -267,21 +267,21 @@
         // Indholdet fra WP filtres og sættes ind i DOM'en
         function filterContent(theFilter) {
             if (theFilter == "101") {
-                document.querySelector(".splash_text h2").textContent = theIcons[3].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[3].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[3].button;
+                document.querySelector(".splash_texts h2").textContent = theIcons[3].title.rendered;
+                document.querySelector(".splash_texts p").innerHTML = theIcons[3].description;
+                document.querySelector(".splash_texts h4").textContent = theIcons[3].button;
             } else if (theFilter == "102") {
-                document.querySelector(".splash_text h2").textContent = theIcons[2].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[2].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[2].button;
+                document.querySelector(".splash_texts h2").textContent = theIcons[2].title.rendered;
+                document.querySelector(".splash_texts p").innerHTML = theIcons[2].description;
+                document.querySelector(".splash_texts h4").textContent = theIcons[2].button;
             } else if (theFilter == "103") {
-                document.querySelector(".splash_text h2").textContent = theIcons[1].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[1].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[1].button;
+                document.querySelector(".splash_texts h2").textContent = theIcons[1].title.rendered;
+                document.querySelector(".splash_texts p").innerHTML = theIcons[1].description;
+                document.querySelector(".splash_texts h4").textContent = theIcons[1].button;
             } else if (theFilter == "105") {
-                document.querySelector(".splash_text h2").textContent = theIcons[0].title.rendered;
-                document.querySelector(".splash_text p").innerHTML = theIcons[0].description;
-                document.querySelector(".splash_text h4").textContent = theIcons[0].button;
+                document.querySelector(".splash_texts h2").textContent = theIcons[0].title.rendered;
+                document.querySelector(".splash_texts p").innerHTML = theIcons[0].description;
+                document.querySelector(".splash_texts h4").textContent = theIcons[0].button;
             }
         }
 
