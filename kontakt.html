@@ -16,7 +16,7 @@
     </section>
     <main>
         <!-- Sektion med oplysninger, der hentes fra WP -->
-        <section id="about">
+        <section id="faq">
             <div class="faq_headers"></div>
             <div class="faq_texts"></div>
         </section>
@@ -34,6 +34,83 @@
         </template>
     </main>
     <script src="script.js"></script>
-</body>
+    <script>
+        "use strict"
 
-</html>
+        let thePage;
+        let theFaqs;
+        let faqFilter;
+
+        // Venter på at DOM'en er indlæst
+        document.addEventListener("DOMContentLoaded", start);
+
+        // Henter siden Kontakt fra WP
+        async function start() {
+            console.log("start");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/pages/15";
+            let jsonData = await fetch(url);
+            thePage = await jsonData.json();
+            console.log(thePage);
+
+            document.querySelector("title").textContent = thePage.title.rendered + " | ByKop";
+            document.querySelector("#splash_kontakt").style.backgroundImage = `url(${thePage.splash_image.guid})`;
+            document.querySelector(".splash_text").innerHTML = thePage.content.rendered;
+
+            getTheFaqs();
+        }
+
+        // Henter FAQs fra WP
+        async function getTheFaqs() {
+            console.log("getTheFaqs");
+            let url = "http://mortengross.dk/kea/10_eksamen_2_sem/bykop/wordpress/wp-json/wp/v2/faq";
+            let jsonData = await fetch(url);
+            theFaqs = await jsonData.json();
+            console.log(theFaqs);
+
+            // Genererer de klikbare FAQ overskrifter
+            let dest = document.querySelector(".faq_headers");
+            let temp = document.querySelector("#faq_headers_template");
+
+            dest.innerHTML = "";
+
+            theFaqs.forEach(header => {
+                let clone = temp.cloneNode(true).content;
+                clone.querySelector("h3").textContent = header.title.rendered;
+                clone.querySelector(".faq_header").dataset.id = header.id;
+                clone.querySelector(".faq_header").addEventListener("click", filterFaqs);
+                dest.appendChild(clone);
+            })
+
+            // Kalder funktionen showFaqs på samme måde, som hvis man klikker about overskriften med ID'et 48
+            showFaqs(faqFilter = "40");
+        }
+
+        // Genererer indholdet der matcher den about overskrift der er klikket på
+        function showFaqs() {
+            console.log("showFaqs");
+            let dest = document.querySelector(".faq_texts");
+            let temp = document.querySelector("#faq_text_template");
+
+            dest.innerHTML = "";
+
+            theFaqs.forEach(faq => {
+                if (faqFilter == faq.id) {
+                    console.log(faq);
+                    let clone = temp.cloneNode(true).content;
+
+                    clone.querySelector(".faq_text").innerHTML = faq.description;
+
+                    dest.appendChild(clone);
+                }
+            })
+        }
+
+        // Udskriver ID'et på den overskrift der er klikket på i konsollen.
+        function filterFaqs() {
+            console.log("ID", this.dataset.id);
+            // Ændrer aboutFilter til det ID som den klikkede overskrift har, og kalder showAbouts med det ID.
+            faqFilter = this.dataset.id;
+            showFaqs();
+        }
+    </script>
+</body></html>
