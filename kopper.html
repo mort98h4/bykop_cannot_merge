@@ -6,19 +6,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /*styler splash*/
+        #splash_kopper {
+            display: grid;
+            grid-template-areas: "produkt""skyline";
+            overflow-x: scroll;
+        }
+
+
+        .skyline_test {
+            grid-area: skyline;
+            background-image: url(imgs/skyline3.png);
+            border-bottom: 30px solid #D9CFC7;
+            width: 100%;
+            height: 190px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin-top: -170px;
+            z-index: -1;
+
+        }
+
+        @media (min-width: 1024px) {
+            .skyline_test {
+                height: 208px;
+            }
+
+            #filter_buttons {
+                overflow-x: ;
+            }
+        }
+
+
+
+        #filter_buttons {
+            grid-area: produkt;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+
+        }
+
+        #filter_buttons img {
+            max-width: 250px;
+            margin: 4rem
+        }
+
+        /*sætter flex på filterknapperne*/
+        .filter_buttons {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+        }
+
+        /*sætter rund bg på filterknapper*/
+        .filter_button {
+            background-color: #F7F7F7;
+            border-radius: 50%;
+            margin: 4rem
+        }
+
+        /*styler produkterne*/
+        .product {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-areas: "left right";
+        }
+
+        .product_image {
+            grid-area: left;
+            height: 300px;
+            width: 300px;
+            background-color: #F7F7F7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product_image img {
+            max-width: 200px;
+        }
+
+        .product_text {
+            grid-area: right;
+        }
+    </style>
 </head>
 
 <body>
     <!-- Splashsektion med filtreringsknapper -->
     <section id="splash_kopper">
         <div class="arrow_left"></div>
+
         <nav id="filter_buttons">
             <div class="filter_button">
                 <img src="imgs/produkter.png" alt="">
             </div>
             <div class="filter_buttons"></div>
         </nav>
+
         <div class="skyline"></div>
+        <div class="skyline_test"></div>
         <div class="arrow_right"></div>
     </section>
     <main>
