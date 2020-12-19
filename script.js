@@ -1,13 +1,39 @@
 // Variabler
 let theFooter;
 
+// Lytter efter scroll på hjemmesiden, og ændrer baggrundsfarven på headeren
+//window.addEventListener("scroll", function () {
+//    let header = document.querySelector("header");
+//    let windowPosition = window.scrollY > 0;
+//
+//    header.classList.toggle("scrolling_active"), windowPosition;
+//});
+
 // Venter på at DOM'en er indlæst
 document.addEventListener("DOMContentLoaded", start);
 
-// Kalder getTheFooter, når DOM'en er indlæst
 function start() {
     console.log("start");
+
+    // JavaScript der styrer burgermenu
+    let burger = document.querySelector(".burger");
+    let nav = document.querySelector(".nav_links");
+
+    // Lytter efter click på burgermenu
+    burger.addEventListener("click", () => {
+        // Viser/skjuler menuen
+        nav.classList.toggle("nav_active");
+        // Tilføjer/fjerner animation på burgermenu
+        burger.classList.toggle("toggle");
+    });
+    // Lytter efter klik på logo, og går til forsiden
+    document.querySelector("#logo").addEventListener("click", () => {
+        location.href = "index.html";
+    });
+
+    // Kalder getTheFooter, når DOM'en er indlæst
     getTheFooter();
+
 }
 
 // Henter footeren fra WP, og indsætter indholdet i DOM'en

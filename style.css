@@ -50,6 +50,103 @@ p {
     color: #0D4A01;
 }
 
+/* Styling af header og menuen */
+header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background-color: #F0F1F0;
+}
+
+#menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo {
+    margin: 10px;
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+}
+
+.nav_links {
+    position: fixed;
+    right: 0px;
+    height: 100vh;
+    top: 0px;
+    background-color: #0D4A10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in;
+    overflow: hidden;
+    padding-top: 70px;
+}
+
+.nav_links a {
+    font-family: sans-serif;
+    color: #F0F1F0;
+    text-decoration: none;
+    padding: 10px;
+    /*    display: block;*/
+}
+
+.burger {
+    display: block;
+    cursor: pointer;
+    padding: 5px;
+    margin: 10px;
+}
+
+.burger div {
+    width: 23px;
+    height: 2px;
+    background-color: #0D4A10;
+    margin: 5px;
+    transition: all 0.5s ease;
+}
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 5px);
+    background-color: #F0F1F0;
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -5px);
+    background-color: #F0F1F0;
+}
+
+.nav_active {
+    transform: translateX(0%);
+}
+
+/*
+.scrolling_active {
+    animation-name: scrolling_active;
+    animation-duration: .5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes scrolling_active {
+    0% {
+        background-color: rgba(240, 241, 240, 0);
+    }
+
+    100% {
+        background-color: rgba(240, 241, 240, 1);
+    }
+}
+*/
+
 /* Styling på footer */
 footer h2,
 footer p {
@@ -75,6 +172,13 @@ footer .wp-block-group {
 }
 
 @media (min-width: 768px) {
+
+    /* Styling af header og menuen */
+    .nav_links {
+        width: 30%;
+    }
+
+    /* Styling af fotter */
     footer {
         display: flex;
         flex-wrap: wrap;
