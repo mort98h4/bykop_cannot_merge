@@ -6,6 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* style på facts sektion*/
+        #facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto
+        }
+
+
+        .fact {
+            height: 300px;
+            width: 300px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -104,5 +129,8 @@
         document.querySelector(".back").addEventListener("click", function() {
             window.history.back();
         });
+
     </script>
-</body></html>
+</body>
+
+</html>
