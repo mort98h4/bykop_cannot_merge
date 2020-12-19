@@ -20,38 +20,29 @@
             background-image: url(imgs/skyline3.png);
             border-bottom: 30px solid #D9CFC7;
             width: 100%;
-            height: 190px;
+            height: 210px;
             background-position: center;
             background-repeat: no-repeat;
             background-size: contain;
             margin-top: -170px;
             z-index: -1;
-
         }
 
         @media (min-width: 1024px) {
             .skyline_test {
                 height: 208px;
             }
-
-            #filter_buttons {
-                overflow-x: ;
-            }
         }
-
-
 
         #filter_buttons {
             grid-area: produkt;
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-
-
         }
 
         #filter_buttons img {
-            max-width: 250px;
+            max-width: 150px;
             margin: 4rem
         }
 
@@ -67,7 +58,7 @@
         .filter_button {
             background-color: #F7F7F7;
             border-radius: 50%;
-            margin: 4rem
+            margin: 3rem;
         }
 
         /*styler produkterne*/
@@ -76,17 +67,19 @@
             margin: 0 auto;
             display: grid;
             grid-template-areas: "left right";
+            padding-top: 2rem
         }
 
         .product_image {
             grid-area: left;
             height: 300px;
             width: 300px;
-            background-color: #F7F7F7;
+            background-color: #d9cfc8;
             border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
+            margin-left: -130px
         }
 
         .product_image img {
@@ -95,6 +88,12 @@
 
         .product_text {
             grid-area: right;
+            margin: 1rem;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
         }
     </style>
 </head>
